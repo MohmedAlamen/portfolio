@@ -20,16 +20,17 @@ const PROJECTS_JSON = 'projects.json';
 const safeUrl = u => { try { const x = new URL(u); return x.protocol === 'https:' ? x.href : ''; } catch(e) { return ''; } };
 
 const skills = [
-  {n:'Vue.js', i:'bi bi-lightning-charge', lv:'adv'}, {n:'React', i:'bi bi-circle-square', lv:'adv'},
-  {n:'JavaScript', i:'bi bi-braces', lv:'exp'}, {n:'HTML5 & CSS3', i:'bi bi-filetype-html', lv:'exp'},
-  {n:'Node.js', i:'bi bi-hexagon', lv:'exp'}, {n:'Java & Spring', i:'bi bi-cup-hot', lv:'exp'},
-  {n:'MongoDB', i:'bi bi-database', lv:'adv'}, {n:'SQL', i:'bi bi-table', lv:'adv'},
-  {n:'IBM Cloud', i:'bi bi-cloud', lv:'adv'}, {n:'Docker', i:'bi bi-box-seam', lv:'mid'},
-  {n:'Git & GitHub', i:'bi bi-github', lv:'exp'}, {n:'REST APIs', i:'bi bi-cloud-arrow-down', lv:'exp'}
+  {n:'Vue.js', g:'f', i:'bi bi-lightning-charge', lv:'adv'}, {n:'React', g:'f', i:'bi bi-circle-square', lv:'adv'},
+  {n:'JavaScript', g:'f', i:'bi bi-braces', lv:'exp'}, {n:'HTML5 & CSS3', g:'f', i:'bi bi-filetype-html', lv:'exp'},
+  {n:'Node.js', g:'b', i:'bi bi-hexagon', lv:'exp'}, {n:'Java & Spring', g:'b', i:'bi bi-cup-hot', lv:'exp'},
+  {n:'MongoDB', g:'d', i:'bi bi-database', lv:'adv'}, {n:'SQL', g:'d', i:'bi bi-table', lv:'adv'},
+  {n:'IBM Cloud', g:'c', i:'bi bi-cloud', lv:'adv'}, {n:'Docker', g:'c', i:'bi bi-box-seam', lv:'mid'},
+  {n:'Git & GitHub', g:'c', i:'bi bi-github', lv:'exp'}, {n:'REST APIs', g:'b', i:'bi bi-cloud-arrow-down', lv:'exp'}
 ];
 
 const T = {
   ar: {
+    layers:[{k:'الواجهة',v:'Vue, React'},{k:'الخادم',v:'Node.js, Java'},{k:'البيانات',v:'MongoDB, SQL'},{k:'السحابة',v:'IBM Cloud, AWS, Azure'}],
     loc:'ar', switchTo:'EN', switchLabel:'Switch to English', menu:'القائمة',
     nav:{about:'نبذة', services:'الخدمات', skills:'المهارات', projects:'المشاريع'},
     hi:'أهلاً، أنا', name:'محمد الأمين', headline:'أبني تطبيقات ويب وسحابية قابلة للتوسع.',
@@ -66,6 +67,7 @@ const T = {
     built:'مبني بـ Vue.js و Bootstrap'
   },
   en: {
+    layers:[{k:'Client',v:'Vue, React'},{k:'API',v:'Node.js, Java'},{k:'Data',v:'MongoDB, SQL'},{k:'Cloud',v:'IBM Cloud, AWS, Azure'}],
     loc:'en', switchTo:'عربي', switchLabel:'التبديل إلى العربية', menu:'Menu',
     nav:{about:'About', services:'Services', skills:'Skills', projects:'Projects'},
     hi:"Hi, I'm", name:'Mohamed Alamen', headline:'I build scalable web and cloud applications.',
@@ -116,7 +118,7 @@ const RepoCard = {
       if (Math.abs(days) < 365) return rtf.format(Math.round(days/30), 'month');
       return rtf.format(Math.round(days/365), 'year');
     };
-    return { t: window.__t, ago, color: l => palette[l] || '#a3a7d4' };
+    return { t: window.__t, ago, color: l => palette[l] || '#9fb4c7' };
   },
   template:`<article class="proj" :class="{star}">
     <span class="badge-top" v-if="star">{{ t.top }}</span>
@@ -202,6 +204,7 @@ const app = createApp({
       })();
     });
 
+    const skillGroups = computed(() => ['f','b','d','c'].map((k,i) => ({k, name: t.value.layers[i].k, items: skills.filter(s => s.g === k)})));
     /* contact form */
     const form = ref({name:'', email:'', message:'', website:''});
     const sending = ref(false), formMsg = ref(''), formOk = ref(false);
@@ -222,7 +225,7 @@ const app = createApp({
       sending.value = false;
     }
 
-    return { form, sending, formMsg, formOk, submitForm, me, t, links, skills, contacts, repos, loading, error, q, lang, langs, featuredRepos, rest, load, typed, toggleLang };
+    return { skillGroups, form, sending, formMsg, formOk, submitForm, me, t, links, skills, contacts, repos, loading, error, q, lang, langs, featuredRepos, rest, load, typed, toggleLang };
   }
 });
 app.component('repo-card', RepoCard);
