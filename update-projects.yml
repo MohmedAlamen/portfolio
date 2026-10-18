@@ -1,0 +1,43 @@
+# يولّد projects.json من مستودعاتك العامة، فلا حاجة لأي توكن في الواجهة ولا حدّ طلبات على الزوار.
+# Generates projects.json from your public repos: no token in the frontend, no rate limit for visitors.
+name: Update projects.json
+
+on:
+  schedule:
+    - cron: '0 3 * * *'      # daily / يومياً
+  workflow_dispatch:          # run manually / تشغيل يدوي
+  push:
+    branches: [main]
+    paths: ['.github/workflows/update-projects.yml']
+
+permissions:
+  contents: write
+
+env:
+  OUT: projects.json
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch public repos
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # token مؤقت يوفّره GitHub، لا يظهر للزوار
+          OWNER: MohmedAlamen
+        run: |
+          gh api "users/$OWNER/repos?per_page=100&type=owner&sort=updated" --paginate \
+          | jq -s 'add | map(select(.fork == false and .private == false)
+              | {id, name, description, html_url, homepage, language, topics,
+                 stargazers_count, forks_count, pushed_at, fork})' > "$OUT"
+          echo "Repos: $(jq length "$OUT")"
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- "$OUT"; then echo "No changes"; exit 0; fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$OUT"
+          git commit -m "chore: update projects.json"
+          git push
