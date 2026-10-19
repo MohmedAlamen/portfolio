@@ -36,3 +36,11 @@ describe('App', () => {
     expect(w.find('[role=status]').exists()).toBe(true)
   })
 })
+
+describe('motion', () => {
+  it('reveal directive leaves content visible when IntersectionObserver is unavailable', async () => {
+    const w = mount(App); await flushPromises()
+    expect(w.findAll('.reveal')).toHaveLength(0)   // jsdom has no IntersectionObserver -> no hidden content
+    expect(w.find('.facts b').text()).toMatch(/\d/)
+  })
+})

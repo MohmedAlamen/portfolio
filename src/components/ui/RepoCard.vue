@@ -41,4 +41,6 @@ function ago(d) {
 .lang::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--dot,#888)}
 .tag{font-size:.72rem;border:1px solid var(--rule);color:var(--accent);border-radius:3px;padding:1px 7px;margin-inline-end:4px;margin-bottom:4px;direction:ltr;display:inline-block}
 .meta{color:var(--mute);font-size:.82rem;display:flex;gap:12px}
+.proj{transition:border-color .2s,transform .3s var(--ease),box-shadow .3s var(--ease)}
+@media (hover:hover){.proj:hover{transform:translateY(-4px);box-shadow:0 14px 28px -18px rgba(30,43,47,.45)}}
 </style>

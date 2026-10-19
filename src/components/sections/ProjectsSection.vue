@@ -1,4 +1,5 @@
 <script setup>
+import { TransitionGroup } from 'vue'
 import { useI18n } from '@/i18n'
 import { useRepos } from '@/composables/useRepos'
 import { me } from '@/config/site'
@@ -10,12 +11,12 @@ const { loading, error, q, lang, langs, featuredRepos, rest, load } = useRepos()
 <template>
   <section id="projects">
       <div class="container">
-        <h2 class="title">{{ t.nav.projects }}</h2>
-        <p class="sub">{{ t.projectsSub }}</p>
+        <h2 v-reveal class="title">{{ t.nav.projects }}</h2>
+        <p v-reveal="{ delay: 80 }" class="sub">{{ t.projectsSub }}</p>
         <h3 class="h5 fw-bold mb-3">{{ t.clientTitle }}</h3>
         <div class="row g-4 mb-5">
-          <div class="col-md-6 col-lg-4" v-for="f in t.client" :key="f.n">
-            <article class="proj client"><h5 class="mb-2">{{ f.n }}</h5><p>{{ f.d }}</p>
+          <div class="col-md-6 col-lg-4" v-for="(f, i) in t.client" :key="f.n">
+            <article v-reveal="{ delay: i * 90 }" class="proj client"><h5 class="mb-2">{{ f.n }}</h5><p>{{ f.d }}</p>
               <div><span class="tag" v-for="x in f.t" :key="x">{{ x }}</span></div></article>
           </div>
         </div>
@@ -40,9 +41,9 @@ const { loading, error, q, lang, langs, featuredRepos, rest, load } = useRepos()
             </div>
           </div>
           <div v-if="!rest.length" class="panel text-center">{{ t.empty }}</div>
-          <div class="row g-4" v-else>
-            <div class="col-md-6 col-lg-4" v-for="r in rest" :key="r.id"><RepoCard :r="r"></RepoCard></div>
-          </div>
+          <TransitionGroup v-else tag="div" name="list" appear class="row g-4">
+            <div class="col-md-6 col-lg-4" v-for="(r, i) in rest" :key="r.id" :style="{ '--d': Math.min(i, 8) * 55 + 'ms' }"><RepoCard :r="r"></RepoCard></div>
+          </TransitionGroup>
         </template>
       </div>
     </section>

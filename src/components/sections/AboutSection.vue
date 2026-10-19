@@ -8,17 +8,17 @@ const profileUrl = `${import.meta.env.BASE_URL}assets/images/profile.jpg`   // Ø
 <template>
   <section id="about">
       <div class="container">
-        <h2 class="title">{{ t.nav.about }}</h2>
-        <p class="sub">{{ t.aboutSub }}</p>
+        <h2 v-reveal class="title">{{ t.nav.about }}</h2>
+        <p v-reveal="{ delay: 80 }" class="sub">{{ t.aboutSub }}</p>
         <div class="row g-4">
           <div class="col-lg-7">
-            <div class="panel d-flex gap-4 align-items-center flex-wrap flex-md-nowrap">
+            <div v-reveal class="panel d-flex gap-4 align-items-center flex-wrap flex-md-nowrap">
               <img :src="profileUrl" :alt="t.name" width="150" height="150" style="border-radius:4px;object-fit:cover" @error="$event.target.remove()">
               <div><p class="mb-2" v-for="p in t.about" :key="p">{{ p }}</p></div>
             </div>
           </div>
           <div class="col-lg-5">
-            <div class="panel">
+            <div v-reveal="{ delay: 120 }" class="panel">
               <h3 class="h6 fw-bold mb-3">{{ t.focusTitle }}</h3>
               <span class="pt" v-for="f in t.focus" :key="f">{{ f }}</span>
               <hr style="border-color:var(--rule)">

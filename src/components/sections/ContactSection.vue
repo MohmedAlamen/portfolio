@@ -16,9 +16,9 @@ const contacts = [
   <section id="contact" class="contact">
       <div class="container">
         <div class="mx-auto" style="max-width:640px">
-          <h2 class="title">{{ t.contactTitle }}</h2>
-          <p class="sub">{{ t.contactSub }}</p>
-          <form class="mb-5" @submit.prevent="submit" novalidate>
+          <h2 v-reveal class="title">{{ t.contactTitle }}</h2>
+          <p v-reveal="{ delay: 80 }" class="sub">{{ t.contactSub }}</p>
+          <form v-reveal="{ delay: 140 }" class="mb-5" @submit.prevent="submit" novalidate>
             <input type="text" v-model="form.website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0">
             <div class="row g-3">
               <div class="col-md-6"><label class="form-label" for="f-name">{{ t.form.name }}</label><input id="f-name" v-model.trim="form.name" class="form-control search" maxlength="80" required autocomplete="name"></div>

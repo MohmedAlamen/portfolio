@@ -52,9 +52,10 @@ src/
   composables/ useRepos, useTyping, useContactForm               (state + behaviour)
   services/    github.js, contact.js                             (network, caching, sanitising)
   i18n/        index.js (useI18n, RTL/LTR switch), ar.js, en.js
+  directives/  reveal.js (v-reveal: scroll-in fade/rise, once)
   data/        skills.js                                         (skills + layer keys)
   config/      site.js                                           (identity, flags, endpoints)
-  utils/       url.js (safeUrl), langColors.js
+  utils/       url.js (safeUrl), langColors.js, motion.js (reduced-motion + observer guards)
   styles/      base.css (tokens + shared); component CSS lives beside its component
 tests/         app.spec.js (Vitest + Vue Test Utils)
 public/        projects.json (generated in CI), assets/images/profile.jpg
@@ -82,3 +83,10 @@ public/        projects.json (generated in CI), assets/images/profile.jpg
 - Contact form: validation, honeypot field, endpoint configurable; falls back to `mailto:`.
 - CI runs tests before build; the GitHub token is the ephemeral `GITHUB_TOKEN`, never shipped to the browser.
 - Next steps: Playwright e2e, Lighthouse CI, per-project case-study pages (vue-router), prerendering for SEO.
+
+## 7. Motion system
+- **Tokens:** one easing `--ease: cubic-bezier(.22,1,.36,1)`; UI feedback ≤ 300 ms, scroll reveals ≈ 550 ms. Only `opacity` and `transform` animate.
+- **Page load:** hero text rises in a staggered sequence (`.rise`, 100 ms steps), the architecture diagram lights up node by node, the facts count up once.
+- **Scroll:** `v-reveal` fades sections/cards in once (IntersectionObserver, classes removed afterwards so hover stays instant); thin progress bar under the navbar; navbar gains a shadow after scrolling; scroll-spy underlines the current section.
+- **Interaction:** buttons lift on hover and press at `scale(.97)`; project cards lift; filtering/searching repos re-enters cards with `TransitionGroup`.
+- **Accessibility:** with `prefers-reduced-motion: reduce` all animation/transition is disabled and content is shown immediately; reveals are also skipped when IntersectionObserver is missing.

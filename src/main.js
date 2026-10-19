@@ -10,5 +10,6 @@ import '@fontsource/ibm-plex-mono/500.css'
 import '@/i18n'
 import '@/styles/base.css'
 import App from './App.vue'
+import reveal from '@/directives/reveal'
 
-createApp(App).mount('#app')
+createApp(App).directive('reveal', reveal).mount('#app')

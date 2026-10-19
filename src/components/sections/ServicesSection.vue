@@ -6,9 +6,9 @@ const { t } = useI18n()
 <template>
   <section id="services">
       <div class="container">
-        <h2 class="title">{{ t.nav.services }}</h2>
-        <p class="sub">{{ t.servicesSub }}</p>
-        <div class="spec" v-for="s in t.services" :key="s.t">
+        <h2 v-reveal class="title">{{ t.nav.services }}</h2>
+        <p v-reveal="{ delay: 80 }" class="sub">{{ t.servicesSub }}</p>
+        <div class="spec" v-for="(s, i) in t.services" :key="s.t" v-reveal="{ delay: i * 90 }">
           <h3>{{ s.t }}</h3><p>{{ s.d }}</p><ul><li v-for="x in s.l" :key="x">{{ x }}</li></ul>
         </div>
       </div>
