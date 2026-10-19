@@ -1,0 +1,17 @@
+:root{--sun:#e39b6b;--paper:#eef2f1;--card:#f9fbfa;--ink:#1e2b2f;--primary:#2f6b63;--accent:#55688f;--rule:#d3dcda;--mute:#5e6e6f}
+body{font-family:'IBM Plex Sans Arabic',sans-serif;background:var(--paper);color:var(--ink);line-height:1.8;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+section{padding:84px 0;border-top:1px solid var(--rule)}
+h2.title{font-weight:700;font-size:clamp(1.7rem,3.4vw,2.4rem);margin-bottom:.4rem}
+.sub{color:var(--mute);max-width:38rem;margin-bottom:2.4rem}
+.btn-main{background:var(--primary);color:var(--paper);border:0;border-radius:4px;padding:.75rem 1.7rem;font-weight:500}
+.btn-main:hover{background:#245650;color:var(--paper)}
+.btn-ghost{border:1px solid var(--ink);color:var(--ink);border-radius:4px;padding:.75rem 1.5rem;font-weight:500;background:transparent}
+.btn-ghost:hover{background:var(--ink);color:var(--paper)}
+/* architecture diagram: the one memorable element */
+.search{background:var(--card);border:1px solid var(--rule);color:var(--ink);border-radius:4px}
+.search:focus{background:var(--card);color:var(--ink);border-color:var(--accent);box-shadow:0 0 0 3px rgba(85,104,143,.25)}
+.search::placeholder{color:var(--mute)}
+.panel{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:1.6rem;height:100%}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}

@@ -1,0 +1,35 @@
+# يبني الموقع وينشره على GitHub Pages، ويولّد projects.json من مستودعاتك العامة قبل البناء.
+# Builds the site, generates projects.json from your public repos, and deploys to GitHub Pages.
+name: Build & Deploy
+on:
+  push: { branches: [main] }
+  schedule: [{ cron: '0 3 * * *' }]   # daily refresh / تحديث يومي
+  workflow_dispatch:
+permissions: { contents: read, pages: write, id-token: write }
+concurrency: { group: pages, cancel-in-progress: true }
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm }
+      - name: Generate public/projects.json
+        env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}', OWNER: MohmedAlamen }
+        run: |
+          gh api "users/$OWNER/repos?per_page=100&type=owner&sort=updated" --paginate \
+          | jq -s 'add | map(select(.fork == false and .private == false)
+              | {id, name, description, html_url, homepage, language, topics,
+                 stargazers_count, forks_count, pushed_at, fork})' > public/projects.json
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: dist }
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: { name: github-pages, url: '${{ steps.d.outputs.page_url }}' }
+    steps:
+      - id: d
+        uses: actions/deploy-pages@v4

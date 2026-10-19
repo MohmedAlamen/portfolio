@@ -1,0 +1,14 @@
+import { createApp } from 'vue'
+import 'bootstrap/js/dist/collapse'
+import 'bootstrap-icons/font/bootstrap-icons.min.css'
+import '@fontsource/ibm-plex-sans-arabic/300.css'
+import '@fontsource/ibm-plex-sans-arabic/400.css'
+import '@fontsource/ibm-plex-sans-arabic/500.css'
+import '@fontsource/ibm-plex-sans-arabic/700.css'
+import '@fontsource/ibm-plex-mono/400.css'
+import '@fontsource/ibm-plex-mono/500.css'
+import '@/i18n'
+import '@/styles/base.css'
+import App from './App.vue'
+
+createApp(App).mount('#app')
