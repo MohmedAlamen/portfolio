@@ -2,7 +2,7 @@
 export const me = {
   github: 'MohmedAlamen',
   email: 'mohaalamen1234@gmail.com',
-  phone: '+97451172313',
+  phone: '+966535766391',        // صيغة دولية بدون مسافات / international format, no spaces
   linkedin: 'https://www.linkedin.com/in/mohaalamen/'
 }
 export const FEATURED_REPOS = []          // أسماء مستودعات تبرزها / repo names to feature (empty = top 3)

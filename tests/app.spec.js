@@ -44,3 +44,12 @@ describe('motion', () => {
     expect(w.find('.facts b').text()).toMatch(/\d/)
   })
 })
+
+describe('phone', () => {
+  it('shows the formatted Saudi number and links with the raw number', async () => {
+    const w = mount(App); await flushPromises()
+    expect(w.text()).toContain('+966 53 576 6391')
+    expect(w.html()).toContain('tel:+966535766391')
+    expect(w.html()).toContain('https://wa.me/966535766391')
+  })
+})

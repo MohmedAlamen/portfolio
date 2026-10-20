@@ -1,6 +1,7 @@
 <script setup>
 import { useI18n } from '@/i18n'
 import { me } from '@/config/site'
+import { formatPhone } from '@/utils/phone'
 const { t } = useI18n()
 const profileUrl = `${import.meta.env.BASE_URL}assets/images/profile.jpg`   // ضع صورتك في public/assets/images/
 </script>
@@ -22,9 +23,9 @@ const profileUrl = `${import.meta.env.BASE_URL}assets/images/profile.jpg`   // �
               <h3 class="h6 fw-bold mb-3">{{ t.focusTitle }}</h3>
               <span class="pt" v-for="f in t.focus" :key="f">{{ f }}</span>
               <hr style="border-color:var(--rule)">
-              <div class="d-flex flex-column gap-1" style="color:var(--mute)">
-                <span><i class="bi bi-envelope me-2"></i>{{ me.email }}</span>
-                <span style="direction:ltr;text-align:start"><i class="bi bi-telephone me-2"></i>{{ me.phone }}</span>
+              <div class="d-flex flex-column gap-2">
+                <a class="contact-line" :href="'mailto:' + me.email"><i class="bi bi-envelope"></i><bdi dir="ltr">{{ me.email }}</bdi></a>
+                <a class="contact-line" :href="'tel:' + me.phone"><i class="bi bi-telephone"></i><bdi dir="ltr">{{ formatPhone(me.phone) }}</bdi></a>
               </div>
             </div>
           </div>
@@ -35,4 +36,7 @@ const profileUrl = `${import.meta.env.BASE_URL}assets/images/profile.jpg`   // �
 
 <style>
 .pt{display:inline-block;border:1px solid var(--rule);border-radius:4px;padding:.15rem .7rem;margin:0 0 .5rem .5rem;font-size:.9rem;color:var(--accent)}
+.contact-line{display:flex;align-items:center;gap:.7rem;color:var(--mute);transition:color .2s}
+.contact-line i{color:var(--primary);font-size:1.05rem}
+.contact-line:hover{color:var(--ink)}
 </style>

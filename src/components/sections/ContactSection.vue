@@ -2,12 +2,14 @@
 import { useI18n } from '@/i18n'
 import { useContactForm } from '@/composables/useContactForm'
 import { me } from '@/config/site'
+import { waLink } from '@/utils/phone'
 const { t } = useI18n()
 const { form, sending, msg, submit } = useContactForm()
 const contacts = [
   { i: 'bi bi-github', u: 'https://github.com/' + me.github, l: 'GitHub' },
   { i: 'bi bi-linkedin', u: me.linkedin, l: 'LinkedIn' },
   { i: 'bi bi-envelope', u: 'mailto:' + me.email, l: 'Email' },
+  { i: 'bi bi-whatsapp', u: waLink(me.phone), l: 'WhatsApp' },
   { i: 'bi bi-telephone', u: 'tel:' + me.phone, l: 'Phone' }
 ]
 </script>
