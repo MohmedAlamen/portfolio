@@ -1,11 +1,12 @@
 <script setup>
 import { TransitionGroup } from 'vue'
 import { useI18n } from '@/i18n'
-import { useRepos } from '@/composables/useRepos'
+import { inject } from 'vue'
+import { REPOS_KEY } from '@/composables/keys'
 import { me } from '@/config/site'
 import RepoCard from '@/components/ui/RepoCard.vue'
 const { t } = useI18n()
-const { loading, error, q, lang, langs, featuredRepos, rest, load } = useRepos()
+const { loading, error, q, lang, langs, featuredRepos, rest, load } = inject(REPOS_KEY)
 </script>
 
 <template>

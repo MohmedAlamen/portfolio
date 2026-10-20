@@ -25,7 +25,8 @@ export default {
     "about": "About",
     "services": "Services",
     "skills": "Skills",
-    "projects": "Projects"
+    "projects": "Projects",
+    "match": "Fit"
   },
   "hi": "Hi, I'm",
   "name": "Mohamed Alamen",
@@ -169,5 +170,22 @@ export default {
     "fail": "Could not send. Please email me directly.",
     "mail": "Your mail app will open to finish sending."
   },
-  "built": "Built with Vue.js & Bootstrap"
+  "built": "Built with Vue.js & Bootstrap",
+  "match": {
+    "title": "Am I a fit for your role?",
+    "sub": "Paste a job description and see which technologies I cover, which I have not listed, and my closest projects.",
+    "label": "Job description",
+    "placeholder": "Paste the job posting or requirements here…",
+    "run": "Analyze fit",
+    "clear": "Clear",
+    "privacy": "Analysis runs in your browser only; the text is never sent anywhere.",
+    "score": "Match",
+    "of": "of {n} technologies mentioned",
+    "covered": "Technologies I cover",
+    "gaps": "Not listed in my skills (happy to learn and discuss)",
+    "none": "No known technologies found. Try pasting the full description.",
+    "repos": "Related projects",
+    "cta": "Email me about this role",
+    "subject": "Job opportunity"
+  }
 }

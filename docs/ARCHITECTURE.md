@@ -18,6 +18,7 @@ flowchart TD
     SEC --> ABOUT[AboutSection]
     SEC --> SERV[ServicesSection]
     SEC --> SKILL[SkillsSection]
+    SEC --> MATCH[MatchSection]
     SEC --> CONT[ContactSection]
   end
   subgraph LOGIC["Application logic (composables/ + i18n/)"]
@@ -29,7 +30,11 @@ flowchart TD
   subgraph DATA["Config & data"]
     CFG[config/site.js]; TXT[i18n/ar.js, en.js]; SK[data/skills.js]
   end
-  PROJ --> UR --> GH
+  APP -. provide .-> UR
+  PROJ -. inject .-> UR
+  MATCH --> UJ[useJobMatch] --> MU[utils/match + data/vocab]
+  UJ -. inject .-> UR
+  UR --> GH
   HERO --> UT
   CONT --> UC --> CT
   UI --> UI18 --> TXT
@@ -47,9 +52,9 @@ src/
   App.vue                  page composition only
   components/
     layout/   AppNavbar, AppFooter
-    sections/ Hero, About, Services, Skills, Projects, Contact   (one per page section)
+    sections/ Hero, About, Services, Skills, Projects, Match, Contact   (one per page section)
     ui/       ArchDiagram, RepoCard                              (reusable pieces)
-  composables/ useRepos, useTyping, useContactForm               (state + behaviour)
+  composables/ useRepos (provided by App), useJobMatch, useTyping, useContactForm               (state + behaviour)
   services/    github.js, contact.js                             (network, caching, sanitising)
   i18n/        index.js (useI18n, RTL/LTR switch), ar.js, en.js
   directives/  reveal.js (v-reveal: scroll-in fade/rise, once)
@@ -90,3 +95,6 @@ public/        projects.json (generated in CI), assets/images/profile.jpg
 - **Scroll:** `v-reveal` fades sections/cards in once (IntersectionObserver, classes removed afterwards so hover stays instant); thin progress bar under the navbar; navbar gains a shadow after scrolling; scroll-spy underlines the current section.
 - **Interaction:** buttons lift on hover and press at `scale(.97)`; project cards lift; filtering/searching repos re-enters cards with `TransitionGroup`.
 - **Accessibility:** with `prefers-reduced-motion: reduce` all animation/transition is disabled and content is shown immediately; reveals are also skipped when IntersectionObserver is missing.
+
+## 8. Job-fit matcher (differentiating feature)
+A recruiter pastes a job description; `utils/match.js` finds known technologies (vocabulary in `data/vocab.js`, word-boundary matching so `Java` ≠ `JavaScript`, `SQL` ≠ `NoSQL`) and compares them with the technologies listed on the site (`mine: true`). It shows a match %, covered technologies, honest gaps, up to 3 related repos, and a pre-filled email. Everything runs in the browser; nothing is sent anywhere. To change what you claim, edit `mine` in `data/vocab.js`.

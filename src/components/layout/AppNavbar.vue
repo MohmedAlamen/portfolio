@@ -3,7 +3,7 @@ import { useI18n } from '@/i18n'
 const { t, toggleLang } = useI18n()
 import { ref, onMounted, onUnmounted } from 'vue'
 import { canObserve } from '@/utils/motion'
-const links = ['about', 'services', 'skills', 'projects']
+const links = ['about', 'services', 'skills', 'projects', 'match']
 const scrolled = ref(false), active = ref(''), progress = ref(0)
 let ticking = false, io
 const onScroll = () => {

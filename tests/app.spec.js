@@ -53,3 +53,22 @@ describe('phone', () => {
     expect(w.html()).toContain('https://wa.me/966535766391')
   })
 })
+
+import { analyze } from '@/utils/match'
+import { vocab } from '@/data/vocab'
+describe('job match', () => {
+  it('separates covered technologies from gaps and avoids false positives', () => {
+    const r = analyze('We need Vue.js, Node.js, AWS and Kubernetes. NoSQL a plus. Strong JavaScript skills.', vocab)
+    expect(r.matched.map(x => x.n)).toEqual(expect.arrayContaining(['Vue.js', 'Node.js', 'AWS', 'MongoDB']))
+    expect(r.gaps.map(x => x.n)).toEqual(['Kubernetes'])
+    expect(r.matched.map(x => x.n)).not.toContain('SQL')
+    expect(r.matched.map(x => x.n)).not.toContain('Java')
+  })
+  it('renders a result in the page', async () => {
+    const w = mount(App); await flushPromises()
+    await w.find('#jd').setValue('Senior React and Docker engineer, TypeScript required.')
+    await w.findAll('#match .btn-main')[0].trigger('click')
+    expect(w.find('#match .score').text()).toBe('67%')
+    expect(w.text()).toContain('TypeScript')
+  })
+})
